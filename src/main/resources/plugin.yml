@@ -1,0 +1,17 @@
+name: GoodJoin
+main: com.chaseoes.firstjoinplus.FirstJoinPlus
+version: ${plugin.version}
+description: ${project.description}
+author: Envel
+commands:
+  ${plugin.name.lower}:
+    description: ${plugin.name} command(s).
+    aliases: fjp
+    usage: /${plugin.name.lower} [reload|setspawn|debug]
+permissions:
+  ${plugin.name.lower}.reload:
+    description: Permission to use the /${plugin.name.lower} reload command.
+  ${plugin.name.lower}.setspawn:
+    description: Permission to use the /${plugin.name.lower} setspawn command.
+  ${plugin.name.lower}.debug:
+    description: Permission to use the /${plugin.name.lower} debug command.
