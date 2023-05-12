@@ -1,23 +1,19 @@
 settings:
   every-join-is-first-join: false
 on-first-join:
-  delay-everything-below-by: 0
+  delay-everything-below-by: 5
   fun-stuff:
     play-sound:
-      enabled: true
+      enabled: false
       sound-name: entity_player_levelup
       listen-permission: firstjoinplus.notify
     smoke-effect:
-      enabled: true
+      enabled: false
     launch-firework:
       enabled: false
   first-join-kit:
-    enabled: true
+    enabled: false
     items:
-    - wood_sword
-    - wood_pickaxe
-    - wood_spade
-    - wood_axe
     - bread:5
   give-written-books:
     enabled: false
@@ -42,5 +38,6 @@ on-first-join:
     enabled: false
     messages:
     - '&2Welcome to our server, %player_name!'
+    - '[button:https://test.com , format:BOLD, color:RED, "Click me"]'
   reset-state:
     enabled: false

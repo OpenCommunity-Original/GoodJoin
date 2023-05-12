@@ -1,0 +1,3 @@
+welcome_message:
+    - '&2Welcome to our server!'
+    - '[button:https://example.com, format:BOLD, color:#FFA500, "Click me"]'

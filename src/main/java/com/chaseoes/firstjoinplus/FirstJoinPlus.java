@@ -1,6 +1,8 @@
 package com.chaseoes.firstjoinplus;
 
-import com.chaseoes.firstjoinplus.utilities.Utilities;
+import com.chaseoes.firstjoinplus.utils.LocaleAPI;
+import com.chaseoes.firstjoinplus.utils.Utilities;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -43,6 +45,10 @@ public class FirstJoinPlus extends JavaPlugin {
             saveConfig();
             getLogger().log(Level.SEVERE, "Your configuration was outdated, so we attempted to generate a new one for you.");
         }
+
+        LocaleAPI localeAPI = new LocaleAPI();
+        Bukkit.getPluginManager().registerEvents(localeAPI, this);
+        localeAPI.loadSupportedLocales(this);
     }
 
     public void onDisable() {

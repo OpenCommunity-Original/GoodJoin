@@ -1,8 +1,8 @@
-package com.chaseoes.firstjoinplus.utilities;
+package com.chaseoes.firstjoinplus.utils;
 
 import com.chaseoes.firstjoinplus.FirstJoinEvent;
 import com.chaseoes.firstjoinplus.FirstJoinPlus;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;

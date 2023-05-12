@@ -1,7 +1,16 @@
 package com.chaseoes.firstjoinplus;
 
-import com.chaseoes.firstjoinplus.utilities.Utilities;
-import org.bukkit.Effect;
+import com.chaseoes.firstjoinplus.utils.FormatUtil;
+import com.chaseoes.firstjoinplus.utils.LocaleAPI;
+import com.chaseoes.firstjoinplus.utils.Utilities;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,8 +48,45 @@ public class FirstJoinListener implements Listener {
                 }
 
                 if (FirstJoinPlus.getInstance().getConfig().getBoolean("on-first-join.send-messages.enabled")) {
-                    for (String message : FirstJoinPlus.getInstance().getConfig().getStringList("on-first-join.send-messages.messages")) {
-                        player.sendMessage(Utilities.replaceVariables(message, player));
+                    List<String> messages = LocaleAPI.getMessagesList(player, "welcome_message");
+                    for (String message : messages) {
+                        if (message.contains("[button:")) {
+                            // Extract the link, text, and button properties
+                            int startIndex = message.indexOf("[button:") + 8;
+                            int endIndex = message.indexOf(", ", startIndex);
+                            String link = message.substring(startIndex, endIndex);
+                            startIndex = message.indexOf("format:", endIndex);
+                            endIndex = message.indexOf(", ", startIndex);
+                            TextDecoration decoration = TextDecoration.valueOf(message.substring(startIndex + 7, endIndex));
+                            startIndex = message.indexOf("color:", endIndex);
+                            endIndex = message.indexOf(", ", startIndex);
+                            TextColor color = TextColor.fromHexString(message.substring(startIndex + 6, endIndex));
+                            String text = message.substring(message.lastIndexOf(", ") + 3, message.length() - 2);
+
+                            // Create the button TextComponent
+                            TextComponent button = Component.text(text)
+                                    .decoration(decoration, true)
+                                    .color(color)
+                                    .clickEvent(ClickEvent.openUrl(link))
+                                    .hoverEvent(HoverEvent.showText(Component.text(text)));
+
+                            // Create the message TextComponent
+                            TextComponent textComponent = Component.text()
+                                    .content("")
+                                    .build();
+
+                            // Append the button to the message
+                            textComponent = textComponent.append(button);
+
+                            // Send the message with the appended button
+                            player.sendMessage(textComponent);
+                        } else {
+                            // Create the message TextComponent
+                            TextComponent textComponent = LegacyComponentSerializer.legacyAmpersand().deserialize(message);
+
+                            // Send the message as a regular chat message
+                            player.sendMessage(textComponent);
+                        }
                     }
                 }
 

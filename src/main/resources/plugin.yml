@@ -1,6 +1,6 @@
 name: GoodJoin
 main: com.chaseoes.firstjoinplus.FirstJoinPlus
-version: ${plugin.version}
+version: 1.19
 description: ${project.description}
 author: Envel
 commands:
