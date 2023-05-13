@@ -1,5 +1,6 @@
 package com.chaseoes.firstjoinplus;
 
+import com.chaseoes.firstjoinplus.utils.BookUtil;
 import com.chaseoes.firstjoinplus.utils.LocaleAPI;
 import com.chaseoes.firstjoinplus.utils.Utilities;
 import net.kyori.adventure.inventory.Book;
@@ -109,13 +110,13 @@ public class FirstJoinListener implements Listener {
                             button = Component.text(text)
                                     .decoration(decoration, true)
                                     .color(color)
-                                    .clickEvent(ClickEvent.callback(f -> player.getServer().dispatchCommand(player.getServer().getConsoleSender(), finalCommand)))
+                                    .clickEvent(ClickEvent.callback(f -> player.getServer().dispatchCommand(player.getServer().getConsoleSender(), finalCommand), ClickCallback.Options.builder().lifetime(Duration.ofSeconds(300)).build()))
                                     .hoverEvent(HoverEvent.showText(Component.text(text)));
                         } else if (book != null) {
                             button = Component.text(text)
                                     .decoration(decoration, true)
                                     .color(color)
-                                    .clickEvent(ClickEvent.callback(f -> openBook(player), ClickCallback.Options.builder().uses(20).build()))
+                                    .clickEvent(ClickEvent.callback(f -> BookUtil.openBook(player), ClickCallback.Options.builder().uses(20).build()))
                                     .hoverEvent(HoverEvent.showText(Component.text(text)));
                         }
 
