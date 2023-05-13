@@ -28,8 +28,8 @@ public class LocaleAPI implements Listener {
     private static final Map<Player, Locale> playerLocales = new HashMap<>();
     private static final Locale DEFAULT_LOCALE = Locale.US;
     private static final List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
-    private static String baseName;
     private static final Map<String, YamlConfiguration> configurationCache = new ConcurrentHashMap<>();
+    private static String baseName;
 
     /**
      * Sets the locale for a player.

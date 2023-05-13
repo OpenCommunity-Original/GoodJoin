@@ -3,7 +3,6 @@ package com.chaseoes.firstjoinplus;
 import com.chaseoes.firstjoinplus.utils.BookUtil;
 import com.chaseoes.firstjoinplus.utils.LocaleAPI;
 import com.chaseoes.firstjoinplus.utils.Utilities;
-import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickCallback;
@@ -21,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.geysermc.floodgate.api.FloodgateApi;
-import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -29,6 +27,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class FirstJoinListener implements Listener {
+
+    public static List<String> getWelcomeMessage(Player player) {
+        if (Bukkit.getPluginManager().isPluginEnabled("Floodgate")) {
+            UUID playerUUID = player.getUniqueId();
+            if (FloodgateApi.getInstance().isFloodgatePlayer(playerUUID)) {
+                return LocaleAPI.getMessagesList(player, "welcome_message_bedrock");
+            }
+        }
+        return LocaleAPI.getMessagesList(player, "welcome_message");
+    }
 
     @EventHandler
     public void onFirstJoin(final FirstJoinEvent event) {
@@ -166,16 +174,6 @@ public class FirstJoinListener implements Listener {
                 player.addPotionEffects(effects);
             }
         }, FirstJoinPlus.getInstance().getConfig().getInt("on-first-join.delay-everything-below-by"));
-    }
-
-    public static List<String> getWelcomeMessage(Player player) {
-        if (Bukkit.getPluginManager().isPluginEnabled("Floodgate")) {
-            UUID playerUUID = player.getUniqueId();
-            if (FloodgateApi.getInstance().isFloodgatePlayer(playerUUID)) {
-                return LocaleAPI.getMessagesList(player, "welcome_message_bedrock");
-            }
-        }
-        return LocaleAPI.getMessagesList(player, "welcome_message");
     }
 
 }
