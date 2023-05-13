@@ -83,7 +83,6 @@ public class FirstJoinListener implements Listener {
                         } else if (buttonType.startsWith("command")) {
                             command = buttonType.substring(buttonType.indexOf(":") + 1);
                             command = command.replace("%player%", player.getName());
-                            System.out.println("DEBUG: " + command);
                         } else if (buttonType.startsWith("book")) {
                             book = buttonType.substring(buttonType.indexOf(":") + 1);
                         }
