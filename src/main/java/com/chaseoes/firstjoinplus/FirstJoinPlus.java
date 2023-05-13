@@ -1,5 +1,6 @@
 package com.chaseoes.firstjoinplus;
 
+import com.chaseoes.firstjoinplus.utils.BookUtil;
 import com.chaseoes.firstjoinplus.utils.LocaleAPI;
 import com.chaseoes.firstjoinplus.utils.Utilities;
 import org.bukkit.Bukkit;
@@ -46,6 +47,8 @@ public class FirstJoinPlus extends JavaPlugin {
             getLogger().log(Level.SEVERE, "Your configuration was outdated, so we attempted to generate a new one for you.");
         }
 
+        getCommand("rules").setExecutor(this);
+
         LocaleAPI localeAPI = new LocaleAPI();
         Bukkit.getPluginManager().registerEvents(localeAPI, this);
         localeAPI.loadSupportedLocales(this);
@@ -58,13 +61,24 @@ public class FirstJoinPlus extends JavaPlugin {
     }
 
     public boolean onCommand(CommandSender cs, Command cmnd, String string, String[] strings) {
+        if (cmnd.getName().equalsIgnoreCase("rules")) {
+            if (cs instanceof Player) {
+                Player player = (Player) cs;
+                BookUtil.openBook(player);
+                return true;
+            } else {
+                cs.sendMessage("This command can only be used by players.");
+                return true;
+            }
+        }
+
         if (strings.length == 0) {
             cs.sendMessage(ChatColor.YELLOW + "[GoodJoin] " + ChatColor.GRAY + "By Envel. Version " + ChatColor.AQUA + getDescription().getVersion() + ".");
             return true;
         }
 
         if (strings.length != 1) {
-            cs.sendMessage(Utilities.formatCommandResponse("Usage: /firstjoinplus <reload|setspawn|debug>"));
+            cs.sendMessage(Utilities.formatCommandResponse("Usage: /fjp <reload|setspawn|debug>"));
             return true;
         }
 

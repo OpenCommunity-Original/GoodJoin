@@ -9,4 +9,15 @@ welcome_message:
     - '[button:book:rules, format:BOLD, color:#f0fe51,  [ View our rules ]]'
     - ''
 
+#     - '&#b651fe Start from spawn /tospawn'
+welcome_message_bedrock:
+    - ''
+    - '&#FFA500&l Welcome to Original!'
+    - '&#FFA500&l Now you are in a random location and you can start your adventure!'
+    - ''
+    - '&#5f51fe Join in our Discord /discord'
+    - ''
+    - '&#f0fe51 View our rules /rules'
+    - ''
+
 rules: '[{"text":"Welcome to GoodMC!\n\nIt''s a Minecraft server that offers fully free gameplay without donations or griefing. The server has a friendly and inclusive community where players can enjoy a challenging hardcore survival experience with all the vanilla features.\n","color":"#00aedb","clickEvent":{"action":"open_url","value":"https://discord.gg/HWPAExBt3A"}},{"text":"GoodMC Community Rules:\n\nGoodMC is a community-driven server where players can explore, create, and collaborate. Its important to respect everyones boundaries and consent in building and social interactions.","color":"#f37735"},{"text":"&l1. Behave appropriately: Treat others with respect and dignity, communicate intelligently, and refrain from insulting or pressuring others.\n\n","color":"#ffc425"},{"text":"&l2. Don''t interfere: Do not build over, under, or next to other players buildings without their explicit permission to respect personal space and boundaries.\n\n","color":"#00b159"},{"text":"&l3. No griefing: Intentionally harming other players creations or the environment is prohibited, and players should take care of the landscape and other players structures.\n\n","color":"#00aedb"},{"text":"&l4. Грайте відповідально: Насолоджуйтесь грою та досліджуйте можливості, але не порушуйте закони, не використовуйте піратське програмне забезпечення або не використовуйте помилки/недоліки.\n","color":"#f37735"}]'

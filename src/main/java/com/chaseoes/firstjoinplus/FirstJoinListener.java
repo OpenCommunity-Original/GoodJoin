@@ -12,6 +12,7 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,22 +20,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.geysermc.floodgate.api.FloodgateApi;
+import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class FirstJoinListener implements Listener {
-
-    public static void openBook(Player player) {
-        Book book = Book.builder()
-                .author(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
-                .title(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
-                .addPage(Component.text(LocaleAPI.getMessage(player, "rules")))
-                .build();
-
-        player.openBook(book);
-    }
 
     @EventHandler
     public void onFirstJoin(final FirstJoinEvent event) {
@@ -59,7 +53,7 @@ public class FirstJoinListener implements Listener {
             }
 
             if (FirstJoinPlus.getInstance().getConfig().getBoolean("on-first-join.send-messages.enabled")) {
-                List<String> messages = LocaleAPI.getMessagesList(player, "welcome_message");
+                List<String> messages = getWelcomeMessage(player);
                 for (String message : messages) {
                     if (message.contains("[button:")) {
                         // Extract the link, text, and button properties
@@ -172,6 +166,16 @@ public class FirstJoinListener implements Listener {
                 player.addPotionEffects(effects);
             }
         }, FirstJoinPlus.getInstance().getConfig().getInt("on-first-join.delay-everything-below-by"));
+    }
+
+    public static List<String> getWelcomeMessage(Player player) {
+        if (Bukkit.getPluginManager().isPluginEnabled("Floodgate")) {
+            UUID playerUUID = player.getUniqueId();
+            if (FloodgateApi.getInstance().isFloodgatePlayer(playerUUID)) {
+                return LocaleAPI.getMessagesList(player, "welcome_message_bedrock");
+            }
+        }
+        return LocaleAPI.getMessagesList(player, "welcome_message");
     }
 
 }

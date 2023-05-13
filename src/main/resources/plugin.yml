@@ -8,6 +8,9 @@ commands:
     description: ${plugin.name} command(s).
     aliases: fjp
     usage: /${plugin.name.lower} [reload|setspawn|debug]
+  rules:
+    description: Opens the server rules book.
+    usage: /rules
 permissions:
   ${plugin.name.lower}.reload:
     description: Permission to use the /${plugin.name.lower} reload command.
