@@ -29,13 +29,19 @@ import java.util.UUID;
 public class FirstJoinListener implements Listener {
 
     public static List<String> getWelcomeMessage(Player player) {
-        if (Bukkit.getPluginManager().isPluginEnabled("Floodgate")) {
-            UUID playerUUID = player.getUniqueId();
-            if (FloodgateApi.getInstance().isFloodgatePlayer(playerUUID)) {
-                return LocaleAPI.getMessagesList(player, "welcome_message_bedrock");
-            }
-        }
+        if (Utilities.isBedrockPlayer(player))
+            return LocaleAPI.getMessagesList(player, "welcome_message_bedrock");
         return LocaleAPI.getMessagesList(player, "welcome_message");
+    }
+
+    /**
+     * Whether this player is a bedrock player.
+     *
+     * @param player The player.
+     * @return True if this player is a bedrock player, false if not.
+     */
+    public static boolean isBedrockPlayer(Player player) {
+        return FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId());
     }
 
     @EventHandler

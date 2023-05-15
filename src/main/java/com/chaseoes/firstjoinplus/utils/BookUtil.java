@@ -10,7 +10,10 @@ import net.kyori.adventure.text.ComponentBuilder;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -58,12 +61,22 @@ public class BookUtil {
             pages.add(pageBuilder.build());
         }
 
-        Book book = Book.builder()
-                .author(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
-                .title(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
-                .pages(pages)
-                .build();
+        if (Utilities.isBedrockPlayer(player)) {
+            ItemStack bookItem = new ItemStack(Material.WRITTEN_BOOK);
+            BookMeta bookMeta = (BookMeta) bookItem.getItemMeta();
+            bookMeta.setTitle("Rules");
+            bookMeta.setAuthor("Original Community");
+            bookMeta.pages(pages);
+            bookItem.setItemMeta(bookMeta);
+            player.getInventory().addItem(bookItem);
+        } else {
+            Book book = Book.builder()
+                    .author(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
+                    .title(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
+                    .pages(pages)
+                    .build();
 
-        player.openBook(book);
+            player.openBook(book);
+        }
     }
 }

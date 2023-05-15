@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.geysermc.floodgate.api.FloodgateApi;
 
 import java.io.*;
 import java.util.*;
@@ -210,6 +211,19 @@ public class Utilities {
         if (b) {
             FirstJoinPlus.getInstance().getServer().getPluginManager().callEvent(new FirstJoinEvent(new PlayerJoinEvent(player, player.getName() + " joined for the first time!")));
         }
+    }
+
+    /**
+     * Whether this player is a bedrock player.
+     *
+     * @param player The player.
+     * @return True if this player is a bedrock player, false if not.
+     */
+    public static boolean isBedrockPlayer(Player player) {
+        if (Bukkit.getPluginManager().isPluginEnabled("floodgate")) {
+            return player != null && FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId());
+        }
+        return false;
     }
 
 }
