@@ -23,9 +23,42 @@ import java.util.regex.Pattern;
 public class BookUtil {
 
     public static void openBook(Player player) {
+        if (Utilities.isBedrockPlayer(player)) {
+            openBedrockBook(player);
+        } else {
+            openDefaultBook(player);
+        }
+    }
+
+    public static void openBedrockBook(Player player) {
+        String message = LocaleAPI.getMessage(player, "rules_bedrock");
+        JsonArray pagesJson = JsonParser.parseString(message).getAsJsonArray();
+        List<Component> pages = convertJsonPages(pagesJson);
+
+        ItemStack bookItem = new ItemStack(Material.WRITTEN_BOOK);
+        BookMeta bookMeta = (BookMeta) bookItem.getItemMeta();
+        bookMeta.setTitle("Rules");
+        bookMeta.setAuthor("Original Community");
+        bookMeta.pages(pages);
+        bookItem.setItemMeta(bookMeta);
+        player.getInventory().addItem(bookItem);
+    }
+
+    public static void openDefaultBook(Player player) {
         String message = LocaleAPI.getMessage(player, "rules");
         JsonArray pagesJson = JsonParser.parseString(message).getAsJsonArray();
+        List<Component> pages = convertJsonPages(pagesJson);
 
+        Book book = Book.builder()
+                .author(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
+                .title(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
+                .pages(pages)
+                .build();
+
+        player.openBook(book);
+    }
+
+    private static List<Component> convertJsonPages(JsonArray pagesJson) {
         List<Component> pages = new ArrayList<>();
         for (JsonElement pageJson : pagesJson) {
             JsonObject pageObject = pageJson.getAsJsonObject();
@@ -53,30 +86,12 @@ public class BookUtil {
                             pageBuilder.clickEvent(ClickEvent.suggestCommand(value));
                             break;
                         default:
-                            // Invalid click event, do nothing
                             break;
                     }
                 }
             }
             pages.add(pageBuilder.build());
         }
-
-        if (Utilities.isBedrockPlayer(player)) {
-            ItemStack bookItem = new ItemStack(Material.WRITTEN_BOOK);
-            BookMeta bookMeta = (BookMeta) bookItem.getItemMeta();
-            bookMeta.setTitle("Rules");
-            bookMeta.setAuthor("Original Community");
-            bookMeta.pages(pages);
-            bookItem.setItemMeta(bookMeta);
-            player.getInventory().addItem(bookItem);
-        } else {
-            Book book = Book.builder()
-                    .author(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
-                    .title(LegacyComponentSerializer.legacyAmpersand().deserialize(""))
-                    .pages(pages)
-                    .build();
-
-            player.openBook(book);
-        }
+        return pages;
     }
 }

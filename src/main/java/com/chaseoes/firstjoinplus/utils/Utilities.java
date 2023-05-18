@@ -198,6 +198,7 @@ public class Utilities {
         player.getInventory().setLeggings(null);
         player.getInventory().setBoots(null);
         player.setHealth(player.getMaxHealth());
+        BookUtil.openBedrockBook(player);
         player.setAllowFlight(false);
         player.setFlying(false);
         player.setExhaustion(0);
