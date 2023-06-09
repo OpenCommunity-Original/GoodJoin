@@ -1,6 +1,6 @@
 name: GoodJoin
 main: com.chaseoes.firstjoinplus.FirstJoinPlus
-version: 1.20
+version: "1.20"
 description: ${project.description}
 author: Envel
 softdepend: [floodgate]
